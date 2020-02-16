@@ -341,12 +341,19 @@
         v-if="bibleWeek"
         class="q-pr-md q-pt-md q-pb-md col-6"
        >
-        <q-video
+       <div class="q-video">
+         <video controls loop autoplay>
+          <source  src="statics/LIBRARYBG/Video/The Autumnal Equinox.mp4" type="video/mp4">
+        </video>
+        <!-- <video
           class="rounded-borders"
           :ratio="16/9"
           frameborder="0"
-          src="statics/LIBRARYBG/Video/The Autumnal Equinox.mp4"
-        />
+
+        >
+        </video> -->
+       </div>
+
         <q-card
           flat
           bordered
@@ -368,7 +375,7 @@
           </q-toolbar>
           <q-card-section class="row wrap">
             <q-avatar
-              size="100px"
+              size="90px"
               square
               class="q-mr-md shadow-20 bg-transparent"
             >
@@ -384,7 +391,7 @@
               <ol
                 type='A'
                 v-if="triviaData.data.results[0].type === 'multiple'"
-                class="text-h6 text-white"
+                class="text-body1 text-white"
               >
                 <li
                   :key="index"
@@ -392,7 +399,7 @@
                 >
                   <q-chip
                     v-if="ia === triviaData.data.results[0].correct_answer && answerNow === true"
-                    class="text-white bg-light-green text-h6"
+                    class="text-white bg-light-green text-body1"
                     v-html="ia"
                   ></q-chip>
                   <span
