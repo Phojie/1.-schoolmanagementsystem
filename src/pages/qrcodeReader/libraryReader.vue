@@ -368,7 +368,7 @@
           </q-toolbar>
           <q-card-section class="row wrap">
             <q-avatar
-              size="200px"
+              size="100px"
               square
               class="q-mr-md shadow-20 bg-transparent"
             >
