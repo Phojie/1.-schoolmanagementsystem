@@ -250,7 +250,7 @@
             <q-card-section style="margin-top:-10px">
               <q-toolbar class="bg-white shadow-5 rounded-borders">
                 <q-toolbar-title class="text-weight-bolder text-dark-orange">
-                  It's NATIONAL ASTRONOMY WEEK | 2020 🚀🛰️🌌☄️👨‍🚀
+                  It's <span class="text-indigo-6">NATIONAL ASTRONOMY</span> WEEK | 2020 🚀🛰️🌌☄️👨‍🚀
                   <!-- <q-chip size="md" class="q-py-md" square color="black">
                     <span class="text-white">Month of </span> <q-chip square class="q-px-sm q-pa-none bg-amber-8 text-black">LOVE !</q-chip>
                   </q-chip> -->
@@ -431,8 +431,8 @@
                 <div v-else>
                   <q-chip
                     outline=""
-                    class="text-white "
-                    :class="triviaData.data.results[0].correct_answer ? 'bg-light-green' : 'bg-grey'"
+                    class="text-white bg-light-green"
+                    v-if="triviaData.data.results[0].correct_answer"
                     square
                   > True
                   </q-chip>
@@ -440,8 +440,8 @@
                   <!-- false -->
                   <q-chip
                     outline=""
-                    :class="!triviaData.data.results[0].correct_answer ? 'bg-red' : 'bg-grey'"
-                    class="text-white "
+                    v-else
+                    class="text-white bg-red"
                     square
                   > False
                   </q-chip>
@@ -715,7 +715,7 @@ export default {
     },
     getTrivia () {
       // https://opentdb.com/api.php?amount=1&category=17
-      axios.get('https://opentdb.com/api.php?amount=1').then(
+      axios.get('https://opentdb.com/api.php?amount=1&type=multiple').then(
         response => (this.triviaData = response)
       )
     },
