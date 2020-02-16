@@ -420,7 +420,6 @@
                     square
                   > True
                   </q-chip>
-
                   <!-- false -->
                   <q-chip
                     outline=""
@@ -437,7 +436,7 @@
                     square
                   > True
                   </q-chip>
-
+                  {{triviaData.data.results[0].correct_answer}}
                   <!-- false -->
                   <q-chip
                     outline=""
