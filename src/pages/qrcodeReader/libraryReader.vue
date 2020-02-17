@@ -305,12 +305,12 @@
                   class="col-12 text-center"
                   style="margin-top:-40px"
                 >
-                  <h2 class="text-weight-bolder text-blue-grey-9">stipulate</h2>
+                  <h2 class="text-weight-bolder text-blue-grey-9">probity</h2>
                   <h5
                     class="text-body1 text-blue-9"
                     style="margin-top:-50px"
                   >
-                    <span class="text-italic">verb</span> | STIP-yuh-layt
+                    <span class="text-italic">noun</span> | PROH-buh-tee
                   </h5>
                 </div>
               </div>
@@ -318,15 +318,11 @@
               <div>
                 <q-toolbar-title class="text-h5 text-blue-9 text-bold">Definition</q-toolbar-title>
                 <p class="text-subtitle1 text-blue-grey-10">
-                  1 : to make an agreement or covenant to do or forbear something : contract
-                  <br>
-                  2 : to demand an express term in an agreement
+                  : adherence to the highest principles and ideals : uprightness
                 </p>
                 <q-toolbar-title class="q-pa-none text-h5 text-blue-9 text-bold">Example</q-toolbar-title>
                 <p class="text-subtitle1 text-blue-grey-10">
-                  A) The cease-fire was <span class="text-primary text-italic">stipulated</span> by the treaty.
-                  <br>
-                  B) The rules <span class="text-primary text-italic">stipulated</span>  that players must wear uniforms.
+                  The tale of young George Washington's refusal to tell a lie after cutting down his father's cherry tree was told to us as grade schoolers to illustrate his <span class="text-primary text-italic">probity</span>.
                   <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
                 </p>
               </div>
@@ -436,8 +432,6 @@
                     square
                   > True
                   </q-chip>
-                  {{triviaData.data.results[0].correct_answer}}
-                  <!-- false -->
                   <q-chip
                     outline=""
                     v-else
