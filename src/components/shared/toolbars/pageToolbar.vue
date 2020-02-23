@@ -78,14 +78,14 @@
               <img src="https://cdn.quasar.dev/img/avatar4.jpg">
             </q-avatar>
 
-            <div class="text-subtitle1 q-mt-md q-mb-xs">Phojie Rengel</div>
+            <div class="text-subtitle1 q-mt-md q-mb-xs">System Administrator</div>
 
             <q-btn
               color="primary"
               label="Logout"
               push
               size="sm"
-              v-close-popup
+              @click="logout"
             />
           </div>
         </div>
@@ -101,6 +101,11 @@ export default {
     return {
       drawerActivityList: true,
       drawerNotification: false
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('auth/signOut')
     }
   }
 }

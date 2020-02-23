@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app'
-
+import Vue from 'vue'
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 
@@ -19,11 +19,13 @@ const firebaseConfig = {
   appId: '1:680661225891:web:8edfb6f2b500a984a08a16'
 }
 // Initialize Firebase
+Vue.prototype.$firebase = firebase
+
 let firebaseApp = firebase.initializeApp(firebaseConfig)
-// let firebaseAuth = firebaseApp.auth()
+let firebaseAuth = firebaseApp.auth()
 let fireDB = firebaseApp.firestore()
 let rdb = firebaseApp.database()
 let fireStorage = firebaseApp.storage()
 let LibraryDB = fireDB.collection('Library')
 
-export { fireDB, rdb, fireStorage, LibraryDB }
+export { fireDB, rdb, fireStorage, LibraryDB, firebaseAuth, firebase }

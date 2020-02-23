@@ -245,12 +245,12 @@
     <div v-if="!showStudInfo"  class="fit row wrap justify-start items-start content-start">
       <div class=" q-pa-md col-6">
         <div class="col">
-          <q-card flat class="bg-transparent">
-            <q-badge color="red">Announcement!</q-badge>
+          <q-card flat>
+            <q-badge color="red">Announcement! </q-badge>
             <q-card-section style="margin-top:-10px">
               <q-toolbar class="bg-white shadow-5 rounded-borders">
                 <q-toolbar-title class="text-weight-bolder text-dark-orange">
-                  It's <span class="text-indigo-6">NATIONAL ASTRONOMY</span> WEEK | 2020 🚀🛰️🌌☄️👨‍🚀
+                  <q-avatar> <img src="https://c.tadst.com/gfx/n/fl/48/ph.png" alt=""> </q-avatar> People Power Anniversary in Philippines 🚁🚁🚁🚁🚁
                   <!-- <q-chip size="md" class="q-py-md" square color="black">
                     <span class="text-white">Month of </span> <q-chip square class="q-px-sm q-pa-none bg-amber-8 text-black">LOVE !</q-chip>
                   </q-chip> -->
@@ -270,8 +270,8 @@
                 ref="dummytester"
               />
               <div class="q-mt-md text-body2 text-weight-medium ">
-                <div class="text-justify text-white">
-                    As declared by former Philippine president, <span class="text-red">Fidel V. Ramos</span>, through Proclamation No. 130, the third week of February is known as the <span class="text-red">National Astronomy Week</span>. Along with Philippine Atmospheric, Geophysical and Astronomical Services Association or PAGASA, Philippine Astronomical Society, Inc. or PAS has actively promoted the field of Astronomy since 1993. Through their series of free lectures, stargazing camps, and competitions for elementary and high school students, the Filipino youth have gained a better understanding of our planet Earth and the universe.
+                <div class="text-justify">
+                  People Power Anniversary is a nationwide observance and school holiday in the Philippines each year. This event holds a special place in the hearts of many Filipinos as they remember a revolution that restored democracy in the Philippines in 1986.
                 </div>
               </div>
               <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum laborum voluptatum, quas sapiente ad minima molestias voluptates nisi repellendus, ex ut nihil aliquid nostrum at exercitationem suscipit aliquam optio atque. -->
@@ -305,12 +305,12 @@
                   class="col-12 text-center"
                   style="margin-top:-40px"
                 >
-                  <h2 class="text-weight-bolder text-blue-grey-9">probity</h2>
+                  <h2 class="text-weight-bolder text-blue-grey-9">misbegotten</h2>
                   <h5
                     class="text-body1 text-blue-9"
                     style="margin-top:-50px"
                   >
-                    <span class="text-italic">noun</span> | PROH-buh-tee
+                    <span class="text-italic">adjective</span> | miss-bih-GAH-tun
                   </h5>
                 </div>
               </div>
@@ -318,11 +318,20 @@
               <div>
                 <q-toolbar-title class="text-h5 text-blue-9 text-bold">Definition</q-toolbar-title>
                 <p class="text-subtitle1 text-blue-grey-10">
-                  : adherence to the highest principles and ideals : uprightness
+                  1 : unlawfully conceived : illegitimate
+                  <br>
+                  2: <ol style="margin-top:-28px" type="a">
+                    <li>
+                      : having a disreputable or improper origin : ill-conceived
+                    </li>
+                    <li>
+                      : contemptible, deformed
+                    </li>
+                  </ol>
                 </p>
                 <q-toolbar-title class="q-pa-none text-h5 text-blue-9 text-bold">Example</q-toolbar-title>
                 <p class="text-subtitle1 text-blue-grey-10">
-                  The tale of young George Washington's refusal to tell a lie after cutting down his father's cherry tree was told to us as grade schoolers to illustrate his <span class="text-primary text-italic">probity</span>.
+                  The city's <span class="text-blue text-italic">misbegotten</span> attempt to install new traffic signals at the busy intersection only caused greater confusion for motorists.
                   <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
                 </p>
               </div>
@@ -338,22 +347,15 @@
         class="q-pr-md q-pt-md q-pb-md col-6"
        >
        <div class="q-video">
-         <video controls loop autoplay>
-          <source  src="statics/LIBRARYBG/Video/The Autumnal Equinox.mp4" type="video/mp4">
+        <video controls loop autoplay>
+          <source  src="statics/LIBRARYBG/Video/EDSA REVOLUTION THE UNTOLD STORY.mp4" type="video/mp4">
         </video>
-        <!-- <video
-          class="rounded-borders"
-          :ratio="16/9"
-          frameborder="0"
-
-        >
-        </video> -->
        </div>
 
         <q-card
           flat
           bordered
-          class="q-mt-md bg-transparent"
+          class="q-mt-md bg-green-8"
          >
           <q-toolbar >
             <q-toolbar-title class="text-weight-bolder
@@ -653,7 +655,7 @@ export default {
 
   },
   methods: {
-    ...mapActions('admin', ['addLibraryStat']),
+    ...mapActions('admin', ['addLibraryStat', 'getPersonnelLists', 'getStudentLists']),
     getWordApi () {
       // let vm = this
       // axios.get('https://api.wordnik.com/v4/words.json/wordOfTheDay?api_key=j7nn0y30zqfvdsgd4c5yzwenypk9bn888o3qhx1d1zhq48soz')
@@ -962,10 +964,22 @@ export default {
     }, 1000)
   },
   mounted () {
+    this.$q.loading.show()
     this.getTrivia()
     this.timerStart()
     this.getBibleVerses()
     this.getWordApi()
+    // let vm = this
+    // this.getPersonnelLists().then(function (result) {
+    //   vm.$q.loading.hide()
+    // }, function (err) {
+    //   console.log(err)
+    // })
+    // this.getStudentLists().then(function (result) {
+    //   vm.$q.loading.hide()
+    // }, function (err) {
+    //   console.log(err)
+    // })
   }
 }
 </script>
@@ -977,14 +991,13 @@ export default {
   background-image: url('https://cdn-images-1.medium.com/max/800/1*hTwl4OGQJtoR3yOSYXCmmg.gif');
 }
 .bgpicHAYS{
-  height:100% !important;
-  background-size: cover;
-  background-repeat: no-repeat
-  background-image: url('/statics/LIBRARYBG/a757df_7e6714194fe74dfbadf6914f84bc5e37_mv2.webp');
+  background-image: url('/statics/svg/flagph.svg')
+  // background-image: url('/statics/LIBRARYBG/a757df_7e6714194fe74dfbadf6914f84bc5e37_mv2.webp');
 }
 .valentinesPic{
-  background-size: cover;
   background-repeat: no-repeat;
+  background-size: cover;
+  // background-image: url('/statics/svg/flagph.svg')
   background-image: url('/statics/LIBRARYBG/a757df_5744a6fd6f574e258119e286b9729f9c_mv2.webp');
   // background-image: url('/statics/LIBRARYBG/a757df_7e6714194fe74dfbadf6914f84bc5e37_mv2.webp');
   //valentines

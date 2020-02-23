@@ -5,7 +5,7 @@ module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
-    boot: ['libraries', 'qr', 'axios', 'firebase', 'vuelidate'],
+    boot: ['libraries', 'qr', 'axios', 'firebase', 'vuelidate', 'boot'],
 
     css: ['app.styl'],
 
@@ -16,7 +16,7 @@ module.exports = function (ctx) {
       // 'eva-icons',
       // 'themify',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
+      'line-awesome',
       'roboto-font', // optional, you are not bound to it
       'material-icons' // optional, you are not bound to it
     ],

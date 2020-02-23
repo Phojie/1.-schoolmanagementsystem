@@ -5,7 +5,6 @@
     content-class="navNachos"
     content-style="padding-bottom:40px;overflow:hidden"
   >
-
     <q-item
       clickable
       class="bg-secondary text-white"
@@ -33,7 +32,7 @@
         <q-item
           clickable
           exact
-          to="/"
+          :to="{name: 'dashboard'}"
           class="q-py-md bg-secondary"
           active-class="text-blue-5"
           @mouseover="inset = false"

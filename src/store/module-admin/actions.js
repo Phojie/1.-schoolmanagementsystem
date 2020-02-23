@@ -4,9 +4,11 @@ import capitalize from 'lodash/capitalize'
 import forEach from 'lodash/forEach'
 import filter from 'lodash/filter'
 import find from 'lodash/find'
+import { Loading } from 'quasar'
 // import lowerFirst from 'lodash/lowerFirst'
 
 export function getStudentLists ({ commit, state }) {
+  Loading.show()
   return new Promise((resolve, reject) => {
     if (state.studentLists.__ob__.vmCount === 0) {
       fireDB
@@ -31,6 +33,7 @@ export function getStudentLists ({ commit, state }) {
               // console.log('Removed city: ', change.doc.data())
                 commit('commitDeleteStudentLists', change.doc.data())
               }
+              Loading.hide()
               resolve()
             },
             function (error) {
@@ -41,6 +44,7 @@ export function getStudentLists ({ commit, state }) {
           )
         })
     } else {
+      Loading.hide()
       resolve()
     }
   })
@@ -371,6 +375,7 @@ export function libraryStatData ({ commit, state }, payload) {
 }
 
 export function getLibraryStat ({ commit, dispatch, state }, payload) {
+  Loading.show()
   return new Promise(function (resolve, reject) {
     // fireDB.collection('studentLists').onSnapshot({ includeMetadataChanges: true }, function (snapshot) {
     if (state.personnelLists.__ob__.vmCount === 0) {
@@ -407,8 +412,10 @@ export function getLibraryStat ({ commit, dispatch, state }, payload) {
               console.error(error)
             }
           )
+          Loading.hide()
         })
     } else {
+      Loading.hide()
       resolve()
     }
   })
@@ -512,6 +519,7 @@ export function addPersonnelLists (context, payload) {
 }
 
 export function getPersonnelLists (context) {
+  Loading.show()
   return new Promise((resolve, reject) => {
     fireDB
       .collection('Registrar/Personnel/Lists')
@@ -546,6 +554,7 @@ export function getPersonnelLists (context) {
           }
         )
       })
+    Loading.hide()
   })
 }
 
@@ -716,6 +725,7 @@ export function getSubjectSchedule (context, payload) {
 }
 
 export function getSchoolYear (context, payload) {
+  Loading.show()
   return new Promise((resolve, reject) => {
     fireDB
       .collection('VPAA/subjectSchedules/Lists/')
@@ -738,6 +748,7 @@ export function getSchoolYear (context, payload) {
             console.error(error)
           }
         )
+        Loading.hide()
         resolve()
       })
   })

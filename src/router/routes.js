@@ -1,10 +1,18 @@
 const routes = [
   {
+    path: '/auth',
+    component: () => import('pages/login.vue'),
+    name: 'login',
+    meta: { loginRequired: true }
+  },
+  {
     path: '/',
     component: () => import('layouts/adminLayout.vue'),
+    meta: { authRequired: true },
     children: [
       {
         path: '/',
+        name: 'dashboard',
         component: () => import('pages/admin/SYSTEMOVERVIEW.vue')
       }
     ]
@@ -12,6 +20,7 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/registrarLayout.vue'),
+    meta: { authRequired: true },
     children: [
       {
         path: '/registrarCor',
@@ -44,6 +53,7 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/libraryLayout.vue'),
+    meta: { authRequired: true },
     children: [
       {
         path: '/libraryCatalog',
@@ -62,9 +72,11 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/publicViews/qrcodeLayout.vue'),
+    meta: { authRequired: true },
     children: [
       {
         path: '/libraryLoginQR',
+        name: 'libraryLoginqr',
         component: () => import('pages/qrcodeReader/libraryReader.vue')
       }
     ]

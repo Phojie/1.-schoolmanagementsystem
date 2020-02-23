@@ -6,6 +6,7 @@
     >
       <q-card-section>
         <div class="text-h4 text-bold"><slot></slot></div>
+        <q-btn no-caps :to="{name: 'libraryLoginqr'}" flat label="https://ckcmtech.netlify.com/libraryloginqr" />
       </q-card-section>
       <q-card-section class="col-12">
         <apexchart
