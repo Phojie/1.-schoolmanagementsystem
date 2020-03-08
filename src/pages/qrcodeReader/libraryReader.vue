@@ -9,21 +9,10 @@
     />
 
     <!-- test -->
-    <transition
-      enter-active-class="animated rotateIn"
-      leave-active-class="animated zoomOut"
-    >
-      <q-card
-        v-if="showStudInfo"
-        flat
-        class="q-pa-lg row shadow-1 bg-transparent"
-      >
-        <div
-          class="full-width fixed-center row wrap justify-center items-center content-center"
-        >
-          <div
-            class="col-md-4 col-sm-12 row justify-center items-center content-center"
-          >
+    <transition enter-active-class="animated rotateIn" leave-active-class="animated zoomOut">
+      <q-card v-if="showStudInfo" flat class="q-pa-lg row shadow-1 bg-transparent">
+        <div class="full-width fixed-center row wrap justify-center items-center content-center">
+          <div class="col-md-4 col-sm-12 row justify-center items-center content-center">
             <q-circular-progress
               show-value
               font-size="10px"
@@ -47,16 +36,12 @@
             v-if="studentInformationForm.idnumber === '2019 - 0111'"
             class="col-md-auto col-sm-12"
           >
-            <div class="text-h4 text-bold text-orange-8">
-              Welcome TIM, FROM YOUR ADMIRER 😍😘
-            </div>
-            <div
-              class="text-h2 text-weight-bolder text-capitalize text-blue-grey-10"
-            >
+            <div class="text-h4 text-bold text-orange-8">Welcome TIM, FROM YOUR ADMIRER 😍😘</div>
+            <div class="text-h2 text-weight-bolder text-capitalize text-blue-grey-10">
               {{
-                studentInformationForm.firstname +
-                  " " +
-                  studentInformationForm.surname
+              studentInformationForm.firstname +
+              " " +
+              studentInformationForm.surname
               }}
             </div>
             <q-separator
@@ -88,9 +73,7 @@
               v-else-if="studentInformationForm.course === 'Computer science'"
               spaced
             ></q-separator>
-            <div class="text-h2 text-bold text-blue-grey-10">
-              {{ studentInformationForm.idnumber }}
-            </div>
+            <div class="text-h2 text-bold text-blue-grey-10">{{ studentInformationForm.idnumber }}</div>
             <q-btn
               class="text-h4 text-bold text-white bg-blue-10 q-mt-lg"
               size="20px"
@@ -98,28 +81,24 @@
                 studentInformationForm.course === 'Secondary education' ||
                   studentInformationForm.course === 'Elementary education'
               "
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-purple-10 q-mt-lg"
               size="20px"
               v-else-if="studentInformationForm.course === 'Criminology'"
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-yellow-10 q-mt-lg"
               size="20px"
               v-else-if="
                 studentInformationForm.course === 'Business administration'
               "
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-green-10 q-mt-lg"
               size="20px"
               v-else-if="studentInformationForm.course === 'Computer science'"
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
           </div>
 
           <div
@@ -127,13 +106,11 @@
             class="col-md-auto col-sm-12"
           >
             <div class="text-h4 text-bold text-orange-8">Welcome 🍆 💦</div>
-            <div
-              class="text-h2 text-weight-bolder text-capitalize text-blue-grey-10"
-            >
+            <div class="text-h2 text-weight-bolder text-capitalize text-blue-grey-10">
               {{
-                studentInformationForm.firstname +
-                  " " +
-                  studentInformationForm.surname
+              studentInformationForm.firstname +
+              " " +
+              studentInformationForm.surname
               }}
             </div>
             <q-separator
@@ -165,9 +142,7 @@
               v-else-if="studentInformationForm.course === 'Computer science'"
               spaced
             ></q-separator>
-            <div class="text-h2 text-bold text-blue-grey-10">
-              {{ studentInformationForm.idnumber }}
-            </div>
+            <div class="text-h2 text-bold text-blue-grey-10">{{ studentInformationForm.idnumber }}</div>
             <q-btn
               class="text-h4 text-bold text-white bg-blue-10 q-mt-lg"
               size="20px"
@@ -175,28 +150,24 @@
                 studentInformationForm.course === 'Secondary education' ||
                   studentInformationForm.course === 'Elementary education'
               "
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-purple-10 q-mt-lg"
               size="20px"
               v-else-if="studentInformationForm.course === 'Criminology'"
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-yellow-10 q-mt-lg"
               size="20px"
               v-else-if="
                 studentInformationForm.course === 'Business administration'
               "
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-green-10 q-mt-lg"
               size="20px"
               v-else-if="studentInformationForm.course === 'Computer science'"
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
           </div>
 
           <div v-else class="col-md-auto col-sm-12">
@@ -210,9 +181,9 @@
             </div>
             <div class="text-h2 text-weight-bolder text-capitalize text-white">
               {{
-                studentInformationForm.firstname +
-                  " " +
-                  studentInformationForm.surname
+              studentInformationForm.firstname +
+              " " +
+              studentInformationForm.surname
               }}
               <q-avatar size="100px" square>
                 <img src="https://loading.io/s/icon/pn885j.svg" alt />
@@ -247,15 +218,8 @@
               v-else-if="studentInformationForm.course === 'Computer science'"
               spaced
             ></q-separator>
-            <q-separator
-              class="bg-deep-orange-3"
-              style="height:10px"
-              v-else
-              spaced
-            ></q-separator>
-            <div class="text-h2 text-bold text-white">
-              {{ studentInformationForm.idnumber }}
-            </div>
+            <q-separator class="bg-deep-orange-3" style="height:10px" v-else spaced></q-separator>
+            <div class="text-h2 text-bold text-white">{{ studentInformationForm.idnumber }}</div>
             <q-btn
               class="text-h4 text-bold text-white bg-blue-10 q-mt-lg"
               size="20px"
@@ -263,34 +227,29 @@
                 studentInformationForm.course === 'Secondary education' ||
                   studentInformationForm.course === 'Elementary education'
               "
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-purple-10 q-mt-lg"
               size="20px"
               v-else-if="studentInformationForm.course === 'Criminology'"
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-yellow-10 q-mt-lg"
               size="20px"
               v-else-if="
                 studentInformationForm.course === 'Business administration'
               "
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-green-10 q-mt-lg"
               size="20px"
               v-else-if="studentInformationForm.course === 'Computer science'"
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
             <q-btn
               class="text-h4 text-bold text-white bg-deep-orange-10 q-mt-lg"
               size="20px"
               v-else
-              >{{ studentInformationForm.course }}</q-btn
-            >
+            >{{ studentInformationForm.course }}</q-btn>
           </div>
         </div>
       </q-card>
@@ -298,24 +257,18 @@
     <!-- test -->
     <q-separator v-if="showStudInfo" inset spaced></q-separator>
 
-    <div
-      v-if="!showStudInfo"
-      class="fit row wrap justify-start items-start content-start"
-    >
+    <div v-if="!showStudInfo" class="fit row wrap justify-start items-start content-start">
       <div class="q-pa-md col-6">
         <div class="col">
           <q-card class="shadow-8">
-            <q-badge color="red">Announcement!</q-badge>
+            <q-badge color="red">No Announcement yet!</q-badge>
             <q-card-section style="margin-top:-10px">
               <q-toolbar class="bg-white shadow-5 rounded-borders">
                 <q-toolbar-title class="text-weight-bolder text-dark-orange">
                   <q-avatar>
-                    <img
-                      src="/statics/jieIcons/apple-touch-icon-180x180.png"
-                      alt
-                    />
+                    <img src="/statics/jieIcons/apple-touch-icon-180x180.png" alt />
                   </q-avatar>
-                  CKCM 69'th FOUNDATION DAY 🎉🎊🎉🎊🎉🎊🎉🎊
+                  <span class="q-ml-md">GOOD DAY CKCMIANS! 🤗🤗🤗🤗🤗🤗</span>
                   <!-- <q-chip size="md" class="q-py-md" square color="black">
                     <span class="text-white">Month of </span> <q-chip square class="q-px-sm q-pa-none bg-amber-8 text-black">LOVE !</q-chip>
                   </q-chip>-->
@@ -335,11 +288,11 @@
               />
               <div class="q-mt-md text-body2 text-weight-medium">
                 <div class="text-justify">
-                  This coming March 05, 2020, We will celebrate our Foundation
+                  <!-- This coming March 02, 2020, We will celebrate our Foundation
                   Day. This is a special day when the entire school family has a
                   chance to reflect not only the beginnings of the College and
                   its founders, but also on the significant development since
-                  the College’s inception.
+                  the College’s inception.-->
                 </div>
               </div>
             </q-card-section>
@@ -350,9 +303,7 @@
                 <h4
                   style="margin-top: 16px"
                   class="text-blue-grey text-weight-medium"
-                >
-                  WORD OF THE DAY
-                </h4>
+                >WORD OF THE DAY</h4>
                 <img
                   class="q-ml-md"
                   src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f914.png"
@@ -365,45 +316,38 @@
                   <q-separator></q-separator>
                 </div>
                 <div class="col-12 text-center" style="margin-top:-40px">
-                  <h2 class="text-weight-bolder text-blue-grey-9">
-                    dissembleplay
-                  </h2>
+                  <h2 class="text-weight-bolder text-blue-grey-9">chapfallen</h2>
                   <h5 class="text-body1 text-blue-9" style="margin-top:-50px">
-                    <span class="text-italic">verb</span> | dih-SEM-bul
+                    <span class="text-italic">adjective</span> | CHAP-faw-lun
                   </h5>
                 </div>
               </div>
 
               <div>
-                <q-toolbar-title class="text-h5 text-blue-9 text-bold"
-                  >Definition</q-toolbar-title
-                >
+                <q-toolbar-title class="text-h5 text-blue-9 text-bold">Definition</q-toolbar-title>
                 <div class="text-subtitle1 text-blue-grey-10">
-                  1 : to hide under a false appearance
-                  <br />
-                  2 : to put on the appearance of : simulate
-                  <br />
-                  3 : to put on a false appearance : to conceal facts,
-                  intentions, or feelings under some pretense
-
+                  1 : having the lower jaw hanging loosely
+                  <br />2 : cast down in spirit : depressed
                   <!-- 2:
                   <ol style="margin-top:-28px" type="a">
                     <li>
                       : having a disreputable or improper origin : ill-conceived
                     </li>
                     <li>: contemptible, deformed</li>
-                  </ol> -->
+                  </ol>-->
                 </div>
-                <q-toolbar-title class="q-pa-none text-h5 text-blue-9 text-bold"
-                  >Example</q-toolbar-title
-                >
+                <q-toolbar-title class="q-mt-md q-pa-none text-h5 text-blue-9 text-bold">Example</q-toolbar-title>
+                <br />
                 <p class="text-subtitle1 text-blue-grey-10">
-                  The front room of the gallery will feature the artist's new
-                  work presented in large scale and a salon style arrangement of
-                  miniature vignettes that various elements of his inhabited
-                  landscapes.
-
-                  <span class="text-blue text-italic"></span>
+                  Thereat he was
+                  <span class="text-blue text-italic">chapfallen</span>
+                  , but wishing nevertheless to hearten his good wife.
+                  <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
+                </p>
+                <p class="text-subtitle1 text-blue-grey-10">
+                  There was a moment of
+                  <span class="text-blue text-italic">chapfallen</span>
+                  silence on the part of Harry Stride.
                   <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
                 </p>
               </div>
@@ -413,8 +357,8 @@
       </div>
 
       <div v-if="bibleWeek" class="q-pr-md q-pt-md q-pb-md col-6">
-        <div class="q-video">
-          <video controls loop autoplay>
+        <div class="q-video" :ratio="16/9">
+          <video class="fit" controls loop autoplay>
             <source
               src="statics/LIBRARYBG/Video/The Importance of a Library Why Books are Mightier Than Technology.mp4"
               type="video/mp4"
@@ -424,20 +368,16 @@
 
         <q-card flat bordered class="q-mt-md bg-indigo-1">
           <q-toolbar>
-            <q-toolbar-title class="text-weight-bolder text-indigo"
-              >TRIVIA</q-toolbar-title
-            >
+            <q-toolbar-title class="text-weight-bolder text-indigo">TRIVIA</q-toolbar-title>
             <q-space></q-space>
-            <q-avatar rounded color="indigo" text-color="white">{{
+            <q-avatar rounded color="indigo" text-color="white">
+              {{
               timerStat
-            }}</q-avatar>
+              }}
+            </q-avatar>
           </q-toolbar>
           <q-card-section class="row wrap">
-            <q-avatar
-              size="90px"
-              square
-              class="q-mr-md shadow-20 bg-transparent"
-            >
+            <q-avatar size="90px" square class="q-mr-md shadow-20 bg-transparent">
               <img
                 src="https://www.emoji.com/wp-content/uploads/filebase/icons/emoji-icon-glossy-00-00-faces-face-positive-face-with-bright-idea-but-ahndless-72dpi-forPersonalUseOnly.png"
                 alt
@@ -471,13 +411,9 @@
 
               <div v-else class="text-h6 text-blue-grey-9 q-my-lg">
                 <div v-if="!answerNow">
-                  <q-chip outline class="text-white bg-grey" square
-                    >True</q-chip
-                  >
+                  <q-chip outline class="text-white bg-grey" square>True</q-chip>
                   <!-- false -->
-                  <q-chip outline class="text-white bg-grey" square
-                    >False</q-chip
-                  >
+                  <q-chip outline class="text-white bg-grey" square>False</q-chip>
                 </div>
                 <div v-else>
                   <q-chip
@@ -485,28 +421,22 @@
                     class="text-white bg-light-green"
                     v-if="triviaData.data.results[0].correct_answer"
                     square
-                    >True</q-chip
-                  >
-                  <q-chip outline v-else class="text-white bg-red" square
-                    >False</q-chip
-                  >
+                  >True</q-chip>
+                  <q-chip outline v-else class="text-white bg-red" square>False</q-chip>
                 </div>
               </div>
 
               <q-chip
                 outline
                 class="text-weight-bold bg-white text-subtitle2 text-blue-8"
-                >Answer's reveal after {{ timerReveal }} seconds</q-chip
-              >
+              >Answer's reveal after {{ timerReveal }} seconds</q-chip>
             </div>
           </q-card-section>
         </q-card>
 
         <q-card v-if="!bibleWeek">
           <q-card-section>
-            <q-toolbar-title class="text-orange-9 text-weight-bolder text-h5"
-              >VISION</q-toolbar-title
-            >
+            <q-toolbar-title class="text-orange-9 text-weight-bolder text-h5">VISION</q-toolbar-title>
             <p class="text-justify" style="font-size:16px">
               Christ the King College de Maranding library will envolve as a
               center of excellence in information storage and retrieval, sharing
@@ -519,9 +449,7 @@
           <q-separator spaced></q-separator>
 
           <q-card-section>
-            <q-toolbar-title class="text-orange-9 text-weight-bolder text-h5"
-              >MISSION</q-toolbar-title
-            >
+            <q-toolbar-title class="text-orange-9 text-weight-bolder text-h5">MISSION</q-toolbar-title>
             <p class="text-justify" style="font-size:16px">
               Christ the King College de Maranding library aims to be the
               information base that will support the teaching, research
@@ -543,9 +471,7 @@
       <q-card style="width:500px" class="q-pa-lg">
         <q-toolbar>
           <q-avatar square>
-            <img
-              src="https://img.icons8.com/ios-filled/50/000000/security-pass.png"
-            />
+            <img src="https://img.icons8.com/ios-filled/50/000000/security-pass.png" />
           </q-avatar>
 
           <q-toolbar-title class="text-h6">
@@ -574,9 +500,7 @@
       <q-card style="width:500px" class="q-pa-lg">
         <q-toolbar>
           <q-avatar square>
-            <img
-              src="https://img.icons8.com/ios-filled/50/000000/security-pass.png"
-            />
+            <img src="https://img.icons8.com/ios-filled/50/000000/security-pass.png" />
           </q-avatar>
 
           <q-toolbar-title class="text-h6">
@@ -1046,12 +970,12 @@ export default {
 }
 
 .bgpicHAYS {
-  background-image: url('/statics/jieIcons/apple-touch-icon-72x72.png')
+  background-image: url('/statics/jieIcons/apple-touch-icon-72x72.png');
   // background-image: url('/statics/LIBRARYBG/a757df_7e6714194fe74dfbadf6914f84bc5e37_mv2.webp');
 }
 
 .valentinesPic {
-  background-image: url('/statics/jieIcons/apple-touch-icon-72x72.png')
+  background-image: url('/statics/jieIcons/apple-touch-icon-72x72.png');
   // background-image: url('/statics/LIBRARYBG/a757df_5744a6fd6f574e258119e286b9729f9c_mv2.webp');
   // background-image: url('/statics/LIBRARYBG/a757df_7e6714194fe74dfbadf6914f84bc5e37_mv2.webp');
   // valentines

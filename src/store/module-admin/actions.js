@@ -1,91 +1,93 @@
-import { fireStorage, fireDB } from 'boot/firebase'
-import Vue from 'vue'
-import capitalize from 'lodash/capitalize'
-import forEach from 'lodash/forEach'
-import filter from 'lodash/filter'
-import find from 'lodash/find'
-import { Loading } from 'quasar'
+import { fireStorage, fireDB } from "boot/firebase";
+import Vue from "vue";
+import capitalize from "lodash/capitalize";
+import forEach from "lodash/forEach";
+import filter from "lodash/filter";
+import find from "lodash/find";
+import { Loading } from "quasar";
 // import lowerFirst from 'lodash/lowerFirst'
 
-export function getStudentLists ({ commit, state }) {
-  Loading.show()
+export function getStudentLists({ commit, state }) {
+  Loading.show();
   return new Promise((resolve, reject) => {
     if (state.studentLists.__ob__.vmCount === 0) {
-      fireDB
-        .collection('studentLists')
-        .onSnapshot(function (snapshot) {
-          snapshot.docChanges().forEach(
-            function (change) {
-              if (change.type === 'added' || change.type === 'modified') {
+      fireDB.collection("studentLists").onSnapshot(function(snapshot) {
+        snapshot.docChanges().forEach(
+          function(change) {
+            if (change.type === "added" || change.type === "modified") {
               // console.log(change.doc.data())
-                const data = {
-                  id: change.doc.data().keyIndex,
-                  information: change.doc.data()
-                }
-                const fullname = `${change.doc.data().firstname} ${change.doc.data().middlename.charAt(0)}. ${change.doc.data().surname}`
+              const data = {
+                id: change.doc.data().keyIndex,
+                information: change.doc.data()
+              };
+              const fullname = `${
+                change.doc.data().firstname
+              } ${change.doc.data().middlename.charAt(0)}. ${
+                change.doc.data().surname
+              }`;
 
-                Vue.set(data.information, 'fullname', fullname)
-                commit('commitGetStudentLists', data)
-              }
-              if (change.type === 'modified') {
-              }
-              if (change.type === 'removed') {
-              // console.log('Removed city: ', change.doc.data())
-                commit('commitDeleteStudentLists', change.doc.data())
-              }
-              Loading.hide()
-              resolve()
-            },
-            function (error) {
-            // The Promise was rejected.
-              reject()
-              console.error(error)
+              Vue.set(data.information, "fullname", fullname);
+              commit("commitGetStudentLists", data);
             }
-          )
-        })
+            if (change.type === "modified") {
+            }
+            if (change.type === "removed") {
+              // console.log('Removed city: ', change.doc.data())
+              commit("commitDeleteStudentLists", change.doc.data());
+            }
+            Loading.hide();
+            resolve();
+          },
+          function(error) {
+            // The Promise was rejected.
+            reject();
+            console.error(error);
+          }
+        );
+      });
     } else {
-      Loading.hide()
-      resolve()
+      Loading.hide();
+      resolve();
     }
-  })
+  });
 }
 
-export function addStudentLists (context, payload) {
-  let docRef = fireDB.collection('studentLists').doc()
-  const myid = docRef.id
-  var defaultUrl = '/statics/defaultProfile.png'
-  var addStudent = new Promise(function (resolve, reject) {
-    if (payload.profileImgUrl !== '') {
+export function addStudentLists(context, payload) {
+  let docRef = fireDB.collection("studentLists").doc();
+  const myid = docRef.id;
+  var defaultUrl = "/statics/defaultProfile.png";
+  var addStudent = new Promise(function(resolve, reject) {
+    if (payload.profileImgUrl !== "") {
       var uploadTask = fireStorage
         .ref()
-        .child('images/' + myid)
-        .putString(payload.profileImgUrl, 'data_url')
+        .child("images/" + myid)
+        .putString(payload.profileImgUrl, "data_url");
       uploadTask.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            context.commit('commitLoading', false)
+            context.commit("commitLoading", false);
           } else {
-            context.commit('commitLoading', true)
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload)
+          context.commit("commitLoadingProgress", payload);
 
-          resolve()
+          resolve();
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
+        function() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             docRef.set({
               firstname: capitalize(payload.firstname),
               middlename: capitalize(payload.middlename),
@@ -95,11 +97,11 @@ export function addStudentLists (context, payload) {
               keyIndex: myid,
               profileImgUrl: downloadURL,
               course: capitalize(payload.course)
-            })
-            resolve()
-          })
+            });
+            resolve();
+          });
         }
-      )
+      );
     } else {
       docRef.set({
         firstname: capitalize(payload.firstname),
@@ -109,56 +111,56 @@ export function addStudentLists (context, payload) {
         keyIndex: myid,
         profileImgUrl: defaultUrl,
         course: capitalize(payload.course)
-      })
-      resolve()
+      });
+      resolve();
     }
-  })
+  });
 
-  var promiseProgress = new Promise(function (resolve, reject) {
+  var promiseProgress = new Promise(function(resolve, reject) {
     // enter logic here
-  })
+  });
 
-  return Promise.race([addStudent, promiseProgress])
+  return Promise.race([addStudent, promiseProgress]);
 }
 
-export function addStudentListsCOR (context, data) {
-  let payload = data.studentInfo
-  let subjectSelected = data.selectedSub
-  let docRef = fireDB.collection('studentLists').doc()
-  const myid = docRef.id
-  var defaultUrl = '/statics/defaultProfile.png'
-  var addStudent = new Promise(function (resolve, reject) {
-    if (payload.profileImgUrl !== '') {
+export function addStudentListsCOR(context, data) {
+  let payload = data.studentInfo;
+  let subjectSelected = data.selectedSub;
+  let docRef = fireDB.collection("studentLists").doc();
+  const myid = docRef.id;
+  var defaultUrl = "/statics/defaultProfile.png";
+  var addStudent = new Promise(function(resolve, reject) {
+    if (payload.profileImgUrl !== "") {
       var uploadTask = fireStorage
         .ref()
-        .child('images/' + myid)
-        .putString(payload.profileImgUrl, 'data_url')
+        .child("images/" + myid)
+        .putString(payload.profileImgUrl, "data_url");
       uploadTask.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            context.commit('commitLoading', false)
+            context.commit("commitLoading", false);
           } else {
-            context.commit('commitLoading', true)
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload)
+          context.commit("commitLoadingProgress", payload);
 
-          resolve()
+          resolve();
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
+        function() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             docRef.set({
               firstname: capitalize(payload.firstname),
               middlename: capitalize(payload.middlename),
@@ -173,11 +175,11 @@ export function addStudentListsCOR (context, data) {
               semester: payload.semester,
               contactNumber: payload.contactNumber,
               gender: payload.gender
-            })
-            resolve()
-          })
+            });
+            resolve();
+          });
         }
-      )
+      );
     } else {
       docRef.set({
         firstname: capitalize(payload.firstname),
@@ -193,103 +195,103 @@ export function addStudentListsCOR (context, data) {
         contactNumber: payload.contactNumber,
         gender: payload.gender,
         profileImgUrl: defaultUrl
-      })
-      resolve()
+      });
+      resolve();
     }
-  })
+  });
 
-  var promiseProgress = new Promise(function (resolve, reject) {
-    forEach(subjectSelected, function (value) {
-      let docRef = fireDB.collection('studentsSubject/').doc()
-      let myId = docRef.id
+  var promiseProgress = new Promise(function(resolve, reject) {
+    forEach(subjectSelected, function(value) {
+      let docRef = fireDB.collection("studentsSubject/").doc();
+      let myId = docRef.id;
       docRef.set(
         {
           classId: value.keyIndex,
           instructorId: value.instructorKeyIndex,
           keyIndex: myId,
           studentIndex: myid,
-          'prelim': null,
-          'midterm': null,
-          'semi': null,
-          'final': null,
-          'rounded': null,
-          'remarks': null
+          prelim: null,
+          midterm: null,
+          semi: null,
+          final: null,
+          rounded: null,
+          remarks: null
         },
-        function (error) {
-          reject(error)
+        function(error) {
+          reject(error);
         }
-      )
-      resolve()
-    })
-  })
+      );
+      resolve();
+    });
+  });
 
-  return Promise.race([addStudent, promiseProgress])
+  return Promise.race([addStudent, promiseProgress]);
 }
 
-export function deleteStudentLists (context, payload) {
+export function deleteStudentLists(context, payload) {
   var deleteImg = new Promise((resolve, reject) => {
-    var imgRef = fireStorage.ref().child('images/' + payload.keyIndex)
+    var imgRef = fireStorage.ref().child("images/" + payload.keyIndex);
     imgRef
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // Uh-oh, an error occurred!
-        reject(error)
-      })
-  })
+        reject(error);
+      });
+  });
   var deleteList = new Promise((resolve, reject) => {
     fireDB
-      .collection('studentLists')
+      .collection("studentLists")
       .doc(payload.keyIndex)
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
-        reject(error)
-      })
-  })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
 
-  return Promise.all([deleteImg, deleteList])
+  return Promise.all([deleteImg, deleteList]);
 }
 
-export function updateStudentLists (context, payload) {
-  return new Promise(function (resolve, reject) {
-    var progressBoolean = Boolean
+export function updateStudentLists(context, payload) {
+  return new Promise(function(resolve, reject) {
+    var progressBoolean = Boolean;
     let docRef = fireDB
-      .collection('studentLists')
-      .doc(payload.studentInfo.keyIndex)
+      .collection("studentLists")
+      .doc(payload.studentInfo.keyIndex);
     if (payload.uploaded) {
       var reupload = fireStorage
         .ref()
-        .child('images/' + payload.studentInfo.keyIndex)
-        .putString(payload.studentInfo.profileImgUrl, 'data_url')
+        .child("images/" + payload.studentInfo.keyIndex)
+        .putString(payload.studentInfo.profileImgUrl, "data_url");
       reupload.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            progressBoolean = false
+            progressBoolean = false;
             // context.commit('commitLoading', false)
           } else {
-            progressBoolean = true
-            context.commit('commitLoading', true)
+            progressBoolean = true;
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload.studentInfo)
+          context.commit("commitLoadingProgress", payload.studentInfo);
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
+        function() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          reupload.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          reupload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             var dataUpdated = {
               firstname: capitalize(payload.studentInfo.firstname),
               middlename: capitalize(payload.studentInfo.middlename),
@@ -298,14 +300,14 @@ export function updateStudentLists (context, payload) {
               profileImgUrl: downloadURL,
               course: capitalize(payload.studentInfo.course),
               keyIndex: payload.studentInfo.keyIndex
-            }
-            docRef.update(dataUpdated).then(function () {
-              resolve(dataUpdated)
-              context.commit('commitLoading', progressBoolean)
-            })
-          })
+            };
+            docRef.update(dataUpdated).then(function() {
+              resolve(dataUpdated);
+              context.commit("commitLoading", progressBoolean);
+            });
+          });
         }
-      )
+      );
     } else {
       docRef.update({
         firstname: capitalize(payload.studentInfo.firstname),
@@ -314,35 +316,38 @@ export function updateStudentLists (context, payload) {
         idnumber: capitalize(payload.studentInfo.idnumber),
         profileImgUrl: payload.studentInfo.profileImgUrl,
         course: capitalize(payload.studentInfo.course)
-      })
-      resolve(payload.studentInfo)
+      });
+      resolve(payload.studentInfo);
     }
-  })
+  });
 }
 
-export function addLibraryStat (context, payload) {
+export function addLibraryStat(context, payload) {
   return new Promise((resolve, reject) => {
     let docRef = fireDB
-      .collection('Library/uyM3J8XUI1aI4dDm0reC/Statisticshay')
-      .doc()
+      .collection("Library/uyM3J8XUI1aI4dDm0reC/Statisticshay")
+      .doc();
     // let docRef = LibraryDB.collection('Statistics').doc('test').doc()
-    let myId = docRef.id
+    let myId = docRef.id;
     docRef.set(
       {
         idnumber: payload.idnumber,
         keyIndex: myId,
         created: payload.time
       },
-      function (error) {
-        reject(error)
+      function(error) {
+        reject(error);
       }
-    )
-    resolve()
-  })
+    );
+    resolve();
+  });
 }
 
-export function libraryStatData ({ commit, state }, payload) {
-  let myData = find(state.studentLists, ['keyIndex', payload.information.idnumber])
+export function libraryStatData({ commit, state }, payload) {
+  let myData = find(state.studentLists, [
+    "keyIndex",
+    payload.information.idnumber
+  ]);
   // console.log(payload.information.idnumber, myData)
   if (myData) {
     var data = {
@@ -359,8 +364,8 @@ export function libraryStatData ({ commit, state }, payload) {
       surname: myData.surname,
       fullname: myData.fullname,
       numberVisit: 1
-    }
-    commit('commitGetLibraryStat', data)
+    };
+    commit("commitGetLibraryStat", data);
   } else {
     // fireDB
     //   .collection('Library/uyM3J8XUI1aI4dDm0reC/Statisticshay')
@@ -374,108 +379,103 @@ export function libraryStatData ({ commit, state }, payload) {
   }
 }
 
-export function getLibraryStat ({ commit, dispatch, state }, payload) {
-  Loading.show()
-  return new Promise(function (resolve, reject) {
+export function getLibraryStat({ commit, dispatch, state }, payload) {
+  Loading.show();
+  return new Promise(function(resolve, reject) {
     // fireDB.collection('studentLists').onSnapshot({ includeMetadataChanges: true }, function (snapshot) {
     if (state.personnelLists.__ob__.vmCount === 0) {
       fireDB
-        .collection('Library/uyM3J8XUI1aI4dDm0reC/Statisticshay')
-        .onSnapshot(function (snapshot) {
+        .collection("Library/uyM3J8XUI1aI4dDm0reC/Statisticshay")
+        .onSnapshot(function(snapshot) {
           snapshot.docChanges().forEach(
-            function (change) {
-              if (change.type === 'added' || change.type === 'modified') {
-              // console.log(change.doc.data())
+            function(change) {
+              if (change.type === "added" || change.type === "modified") {
+                // console.log(change.doc.data())
                 if (change.doc.data().keyIndex) {
                   const data = {
                     id: change.doc.data().keyIndex,
                     information: change.doc.data()
-                  }
-                  dispatch('libraryStatData', data)
+                  };
+                  dispatch("libraryStatData", data);
                 }
               }
-              if (change.type === 'modified') {
-                console.log('modified console')
+              if (change.type === "modified") {
+                console.log("modified console");
               }
-              if (change.type === 'removed') {
-                commit(
-                  'commitDeleteLibraryStat',
-                  change.doc.data().keyIndex
-                )
-              // console.log('Removed city: ', change.doc.data())
-              // context.commit('commitDeleteStudentLists', change.doc.data())
+              if (change.type === "removed") {
+                commit("commitDeleteLibraryStat", change.doc.data().keyIndex);
+                // console.log('Removed city: ', change.doc.data())
+                // context.commit('commitDeleteStudentLists', change.doc.data())
               }
             },
-            function (error) {
-            // The Promise was rejected.
-              reject()
-              console.error(error)
+            function(error) {
+              // The Promise was rejected.
+              reject();
+              console.error(error);
             }
-          )
-          Loading.hide()
-        })
+          );
+          Loading.hide();
+        });
     } else {
-      Loading.hide()
-      resolve()
+      Loading.hide();
+      resolve();
     }
-  })
+  });
 }
 
-export function deleteStatistics (context, payload) {
-  console.log(payload)
+export function deleteStatistics(context, payload) {
+  console.log(payload);
   return new Promise((resolve, reject) => {
     fireDB
-      .collection('Library/uyM3J8XUI1aI4dDm0reC/Statisticshay')
+      .collection("Library/uyM3J8XUI1aI4dDm0reC/Statisticshay")
       .doc(payload.createdIndex)
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
-        reject(error)
-      })
-  })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
 }
 
-export function addPersonnelLists (context, payload) {
-  console.log(payload)
-  let docRef = fireDB
-    .collection('Registrar/Personnel/Lists')
-    .doc()
-  const myid = docRef.id
-  var defaultUrl = '/statics/defaultProfile.png'
-  var addStudent = new Promise(function (resolve, reject) {
-    if (payload.profileImgUrl !== '') {
+export function addPersonnelLists(context, payload) {
+  console.log(payload);
+  let docRef = fireDB.collection("Registrar/Personnel/Lists").doc();
+  const myid = docRef.id;
+  var defaultUrl = "/statics/defaultProfile.png";
+  var addStudent = new Promise(function(resolve, reject) {
+    if (payload.profileImgUrl !== "") {
       var uploadTask = fireStorage
         .ref()
-        .child('1.PersonnelListsImages/' + myid + 'file/' + myid)
-        .putString(payload.profileImgUrl, 'data_url')
+        .child("1.PersonnelListsImages/" + myid + "file/" + myid)
+        .putString(payload.profileImgUrl, "data_url");
       uploadTask.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            context.commit('commitLoading', false)
+            context.commit("commitLoading", false);
           } else {
-            context.commit('commitLoading', true)
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload)
+          context.commit("commitLoadingProgress", payload);
 
-          resolve()
+          resolve();
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
+        function() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             docRef.set({
               firstname: capitalize(payload.firstname),
               middlename: capitalize(payload.middlename),
@@ -488,11 +488,11 @@ export function addPersonnelLists (context, payload) {
               contactNumber: payload.contactNumber,
               profileImgUrl: downloadURL,
               department: capitalize(payload.course)
-            })
-            resolve()
-          })
+            });
+            resolve();
+          });
         }
-      )
+      );
     } else {
       docRef.set({
         firstname: capitalize(payload.firstname),
@@ -506,124 +506,139 @@ export function addPersonnelLists (context, payload) {
         profileImgUrl: defaultUrl,
         department: capitalize(payload.course),
         keyIndex: myid
-      })
-      resolve()
+      });
+      resolve();
     }
-  })
+  });
 
-  var promiseProgress = new Promise(function (resolve, reject) {
+  var promiseProgress = new Promise(function(resolve, reject) {
     // enter logic here
-  })
+  });
 
-  return Promise.race([addStudent, promiseProgress])
+  return Promise.race([addStudent, promiseProgress]);
 }
 
-export function getPersonnelLists (context) {
-  Loading.show()
+export function getPersonnelLists(context) {
+  Loading.show();
   return new Promise((resolve, reject) => {
     fireDB
-      .collection('Registrar/Personnel/Lists')
-      .onSnapshot(function (snapshot) {
-        resolve()
+      .collection("Registrar/Personnel/Lists")
+      .onSnapshot(function(snapshot) {
+        resolve();
         snapshot.docChanges().forEach(
-          function (change) {
-            if (change.type === 'added' || change.type === 'modified') {
+          function(change) {
+            if (change.type === "added" || change.type === "modified") {
               // console.log(change.doc.data())
               const data = {
                 id: change.doc.data().keyIndex,
                 information: change.doc.data()
-              }
+              };
 
               const fullname = `${
-                change.doc.data().firstname} ${change.doc.data().middlename.charAt(0)}. ${change.doc.data().surname}`
+                change.doc.data().firstname
+              } ${change.doc.data().middlename.charAt(0)}. ${
+                change.doc.data().surname
+              }`;
 
-              Vue.set(data.information, 'fullname', fullname)
-              context.commit('commitGetPersonnelLists', data)
+              Vue.set(data.information, "fullname", fullname);
+              context.commit("commitGetPersonnelLists", data);
             }
-            if (change.type === 'modified') {
+            if (change.type === "modified") {
             }
-            if (change.type === 'removed') {
+            if (change.type === "removed") {
               // console.log('Removed city: ', change.doc.data())
-              context.commit('commitDeletePersonnelLists', change.doc.data())
+              context.commit("commitDeletePersonnelLists", change.doc.data());
             }
           },
-          function (error) {
+          function(error) {
             // The Promise was rejected.
-            reject()
-            console.error(error)
+            reject();
+            console.error(error);
           }
-        )
-      })
-    Loading.hide()
-  })
+        );
+      });
+    Loading.hide();
+  });
 }
 
-export function deletePersonnelLists (context, payload) {
+export function deletePersonnelLists(context, payload) {
   var deleteImg = new Promise((resolve, reject) => {
-    var imgRef = fireStorage.ref().child('1.PersonnelListsImages/' + payload.keyIndex + 'file/' + payload.keyIndex)
+    var imgRef = fireStorage
+      .ref()
+      .child(
+        "1.PersonnelListsImages/" +
+          payload.keyIndex +
+          "file/" +
+          payload.keyIndex
+      );
     imgRef
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // Uh-oh, an error occurred!
-        reject(error)
-      })
-  })
+        reject(error);
+      });
+  });
   var deleteList = new Promise((resolve, reject) => {
     fireDB
-      .collection('Registrar/Personnel/Lists')
+      .collection("Registrar/Personnel/Lists")
       .doc(payload.keyIndex)
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
-        reject(error)
-      })
-  })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
 
-  return Promise.all([deleteImg, deleteList])
+  return Promise.all([deleteImg, deleteList]);
 }
 
-export function updatePersonnelLists (context, payload) {
-  console.log(payload)
+export function updatePersonnelLists(context, payload) {
+  console.log(payload);
   // course === department
-  return new Promise(function (resolve, reject) {
-    var progressBoolean = Boolean
+  return new Promise(function(resolve, reject) {
+    var progressBoolean = Boolean;
     let docRef = fireDB
-      .collection('Registrar/Personnel/Lists')
-      .doc(payload.studentInfo.keyIndex)
+      .collection("Registrar/Personnel/Lists")
+      .doc(payload.studentInfo.keyIndex);
     if (payload.uploaded) {
       var reupload = fireStorage
         .ref()
-        .child('1.PersonnelListsImages/' + payload.studentInfo.keyIndex + 'file/' + payload.studentInfo.keyIndex)
-        .putString(payload.studentInfo.profileImgUrl, 'data_url')
+        .child(
+          "1.PersonnelListsImages/" +
+            payload.studentInfo.keyIndex +
+            "file/" +
+            payload.studentInfo.keyIndex
+        )
+        .putString(payload.studentInfo.profileImgUrl, "data_url");
       reupload.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           var progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            progressBoolean = false
+            progressBoolean = false;
             // context.commit('commitLoading', false)
           } else {
-            progressBoolean = true
-            context.commit('commitLoading', true)
+            progressBoolean = true;
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload.studentInfo)
+          context.commit("commitLoadingProgress", payload.studentInfo);
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
+        function() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          reupload.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          reupload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             var dataUpdated = {
               firstname: capitalize(payload.studentInfo.firstname),
               middlename: capitalize(payload.studentInfo.middlename),
@@ -636,14 +651,14 @@ export function updatePersonnelLists (context, payload) {
               profileImgUrl: downloadURL,
               course: capitalize(payload.studentInfo.course),
               keyIndex: payload.studentInfo.keyIndex
-            }
-            docRef.update(dataUpdated).then(function () {
-              resolve(dataUpdated)
-              context.commit('commitLoading', progressBoolean)
-            })
-          })
+            };
+            docRef.update(dataUpdated).then(function() {
+              resolve(dataUpdated);
+              context.commit("commitLoading", progressBoolean);
+            });
+          });
         }
-      )
+      );
     } else {
       docRef.update({
         firstname: capitalize(payload.studentInfo.firstname),
@@ -656,19 +671,17 @@ export function updatePersonnelLists (context, payload) {
         department: capitalize(payload.studentInfo.course),
         profileImgUrl: payload.studentInfo.profileImgUrl,
         course: capitalize(payload.studentInfo.course)
-      })
-      resolve(payload.studentInfo)
+      });
+      resolve(payload.studentInfo);
     }
-  })
+  });
 }
 // registrar GOD WE TRUST :)
 
-export function addSubjectSchedule (state, payload) {
+export function addSubjectSchedule(state, payload) {
   return new Promise((resolve, reject) => {
-    let docRef = fireDB
-      .collection('VPAA/subjectSchedules/Lists/')
-      .doc()
-    let myId = docRef.id
+    let docRef = fireDB.collection("VPAA/subjectSchedules/Lists/").doc();
+    let myId = docRef.id;
     docRef.set(
       {
         keyIndex: myId,
@@ -684,84 +697,88 @@ export function addSubjectSchedule (state, payload) {
         room: capitalize(payload.room),
         instructorKeyIndex: payload.instructor.keyIndex
       },
-      function (error) {
-        reject(error)
+      function(error) {
+        reject(error);
       }
-    )
-    resolve(payload)
-  })
+    );
+    resolve(payload);
+  });
 }
 
-export function getSubjectSchedule (context, payload) {
+export function getSubjectSchedule(context, payload) {
   return new Promise((resolve, reject) => {
     fireDB
-      .collection('VPAA/subjectSchedules/Lists/')
-      .where('schoolYear', '==', payload.year)
-      .where('semester', '==', payload.semester)
-      .onSnapshot(function (snapshot) {
-        resolve()
+      .collection("VPAA/subjectSchedules/Lists/")
+      .where("schoolYear", "==", payload.year)
+      .where("semester", "==", payload.semester)
+      .onSnapshot(function(snapshot) {
+        resolve();
         snapshot.docChanges().forEach(
-          function (change) {
-            if (change.type === 'added' || change.type === 'modified') {
+          function(change) {
+            if (change.type === "added" || change.type === "modified") {
               // console.log(change.doc.data())
-              context.commit('commitGetSubjectsSchedule', change.doc.data())
+              context.commit("commitGetSubjectsSchedule", change.doc.data());
             }
-            if (change.type === 'modified') {
+            if (change.type === "modified") {
             }
-            if (change.type === 'removed') {
+            if (change.type === "removed") {
               // console.log('Removed city: ', change.doc.data())
-              context.commit('commitDeleteSubjectsSchedule', change.doc.data())
+              context.commit("commitDeleteSubjectsSchedule", change.doc.data());
             }
           },
-          function (error) {
+          function(error) {
             // The Promise was rejected.
-            reject()
-            console.error(error)
+            reject();
+            console.error(error);
           }
-        )
-        resolve()
-      })
-  })
+        );
+        resolve();
+      });
+  });
 }
 
-export function getSchoolYear (context, payload) {
-  Loading.show()
+export function getSchoolYear(context, payload) {
+  Loading.show();
   return new Promise((resolve, reject) => {
     fireDB
-      .collection('VPAA/subjectSchedules/Lists/')
-      .onSnapshot(function (snapshot) {
+      .collection("VPAA/subjectSchedules/Lists/")
+      .onSnapshot(function(snapshot) {
         snapshot.docChanges().forEach(
-          function (change) {
-            if (change.type === 'added' || change.type === 'modified') {
-              context.commit('commitGetSchoolYear', change.doc.data())
+          function(change) {
+            if (change.type === "added" || change.type === "modified") {
+              context.commit("commitGetSchoolYear", change.doc.data());
             }
-            if (change.type === 'modified') {
+            if (change.type === "modified") {
             }
-            if (change.type === 'removed') {
+            if (change.type === "removed") {
               // console.log('Removed city: ', change.doc.data())
-              context.commit('commitDeleteSy', change.doc.data())
+              context.commit("commitDeleteSy", change.doc.data());
             }
           },
-          function (error) {
+          function(error) {
             // The Promise was rejected.
-            reject()
-            console.error(error)
+            reject();
+            console.error(error);
           }
-        )
-        Loading.hide()
-        resolve()
-      })
-  })
+        );
+        Loading.hide();
+        resolve();
+      });
+  });
 }
 
 // Library IN GOD WE TRUST :()
 
-export function addCatalogAction (context, payload) {
-  let docRef = fireDB.collection('Library/fIrWnYeJhM1fgkoj14gr/Catalogs').doc()
-  const myid = docRef.id
-  var defaultUrl = '/statics/default_profile_400x400.png'
-  var addStudent = new Promise(function (resolve, reject) {
-    if (payload.imgUrl === null || payload.imgUrl === '' || payload.url === undefined) {
+export function addCatalogAction(context, payload) {
+  let docRef = fireDB.collection("Library/fIrWnYeJhM1fgkoj14gr/Catalogs").doc();
+  const myid = docRef.id;
+  var defaultUrl = "/statics/default_profile_400x400.png";
+  var addStudent = new Promise(function(resolve, reject) {
+    if (
+      payload.imgUrl === null ||
+      payload.imgUrl === "" ||
+      payload.url === undefined
+    ) {
       docRef.set({
         accessionNumber: payload.accessionNumber,
         title: capitalize(payload.title),
@@ -779,39 +796,39 @@ export function addCatalogAction (context, payload) {
         keyIndex: myid,
         imgUrl: defaultUrl,
         additionalInfo: payload.additionalInfo
-
-      })
-      resolve()
+      });
+      resolve();
     } else {
       var uploadTask = fireStorage
         .ref()
-        .child('Library/CatalogImages/' + myid)
-        .putString(payload.imgUrl, 'data_url')
+        .child("Library/CatalogImages/" + myid)
+        .putString(payload.imgUrl, "data_url");
       uploadTask.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          var progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            context.commit('commitLoading', false)
+            context.commit("commitLoading", false);
           } else {
-            context.commit('commitLoading', true)
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload)
+          context.commit("commitLoadingProgress", payload);
 
-          resolve()
+          resolve();
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
+        function() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             docRef.set({
               accessionNumber: payload.accessionNumber,
               title: capitalize(payload.title),
@@ -829,58 +846,60 @@ export function addCatalogAction (context, payload) {
               keyIndex: myid,
               imgUrl: downloadURL,
               additionalInfo: payload.additionalInfo
-            })
-            resolve()
-          })
+            });
+            resolve();
+          });
         }
-      )
+      );
     }
-  })
+  });
 
-  var promiseProgress = new Promise(function (resolve, reject) {
+  var promiseProgress = new Promise(function(resolve, reject) {
     // enter logic here
-  })
+  });
 
-  return Promise.race([addStudent, promiseProgress])
+  return Promise.race([addStudent, promiseProgress]);
 }
 
-export function getAllCatalogAction (context) {
+export function getAllCatalogAction(context) {
   return new Promise((resolve, reject) => {
     fireDB
-      .collection('Library/fIrWnYeJhM1fgkoj14gr/Catalogs')
-      .onSnapshot(function (snapshot) {
-        resolve()
+      .collection("Library/fIrWnYeJhM1fgkoj14gr/Catalogs")
+      .onSnapshot(function(snapshot) {
+        resolve();
         snapshot.docChanges().forEach(
-          function (change) {
-            if (change.type === 'added' || change.type === 'modified') {
+          function(change) {
+            if (change.type === "added" || change.type === "modified") {
               // console.log(change.doc.data())
-              context.commit('commitAllCatalogG', change.doc.data())
+              context.commit("commitAllCatalogG", change.doc.data());
             }
-            if (change.type === 'modified') {
+            if (change.type === "modified") {
             }
-            if (change.type === 'removed') {
+            if (change.type === "removed") {
               // console.log('Removed city: ', change.doc.data())
-              context.commit('commitDeleteCatalog', change.doc.data())
+              context.commit("commitDeleteCatalog", change.doc.data());
             }
           },
-          function (error) {
+          function(error) {
             // The Promise was rejected.
-            reject()
-            console.error(error)
+            reject();
+            console.error(error);
           }
-        )
-      })
-  })
+        );
+      });
+  });
 }
-export function updateCatalogAction (context, data) {
-  let payload = data.data
-  console.log(data, payload.keyIndex)
-  let dummypayload = data.dummyData
-  let docRef = fireDB.collection('Library/fIrWnYeJhM1fgkoj14gr/Catalogs').doc(payload.keyIndex)
-  var defaultUrl = '/statics/default_profile_400x400.png'
-  var addStudent = new Promise(function (resolve, reject) {
-    if (payload.imgUrl === null || payload.imgUrl === '') {
-      console.log('1')
+export function updateCatalogAction(context, data) {
+  let payload = data.data;
+  console.log(data, payload.keyIndex);
+  let dummypayload = data.dummyData;
+  let docRef = fireDB
+    .collection("Library/fIrWnYeJhM1fgkoj14gr/Catalogs")
+    .doc(payload.keyIndex);
+  var defaultUrl = "/statics/default_profile_400x400.png";
+  var addStudent = new Promise(function(resolve, reject) {
+    if (payload.imgUrl === null || payload.imgUrl === "") {
+      console.log("1");
       docRef.update({
         accessionNumber: payload.accessionNumber,
         title: capitalize(payload.title),
@@ -898,11 +917,10 @@ export function updateCatalogAction (context, data) {
         keyIndex: payload.keyIndex,
         imgUrl: defaultUrl,
         additionalInfo: payload.additionalInfo
-
-      })
-      resolve()
+      });
+      resolve();
     } else if (payload.imgUrl === dummypayload.imgUrl) {
-      console.log('2')
+      console.log("2");
       docRef.update({
         accessionNumber: payload.accessionNumber,
         title: capitalize(payload.title),
@@ -920,38 +938,38 @@ export function updateCatalogAction (context, data) {
         keyIndex: payload.keyIndex,
         imgUrl: payload.imgUrl,
         additionalInfo: payload.additionalInfo
-
-      })
-      resolve()
+      });
+      resolve();
     } else {
-      console.log('3')
+      console.log("3");
       var uploadTask = fireStorage
         .ref()
-        .child('Library/CatalogImages/' + payload.keyIndex)
-        .putString(payload.imgUrl, 'data_url')
+        .child("Library/CatalogImages/" + payload.keyIndex)
+        .putString(payload.imgUrl, "data_url");
       uploadTask.on(
-        'state_changed',
-        function (snapshot) {
+        "state_changed",
+        function(snapshot) {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          var progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           // console.log('Upload is ' + progress + '% done')
           if (progress === 100) {
-            context.commit('commitLoading', false)
+            context.commit("commitLoading", false);
           } else {
-            context.commit('commitLoading', true)
+            context.commit("commitLoading", true);
           }
-          context.commit('commitLoadingProgress', payload)
+          context.commit("commitLoadingProgress", payload);
 
-          resolve()
+          resolve();
         },
-        function (error) {
+        function(error) {
           // Handle unsuccessful uploads
-          console.log(error)
-          reject()
+          console.log(error);
+          reject();
         },
-        function () {
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+        function() {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
             docRef.update({
               accessionNumber: payload.accessionNumber,
               title: capitalize(payload.title),
@@ -969,72 +987,75 @@ export function updateCatalogAction (context, data) {
               keyIndex: payload.keyIndex,
               imgUrl: downloadURL,
               additionalInfo: payload.additionalInfo
-            })
-            resolve()
-          })
+            });
+            resolve();
+          });
         }
-      )
+      );
     }
-  })
+  });
 
-  var promiseProgress = new Promise(function (resolve, reject) {
+  var promiseProgress = new Promise(function(resolve, reject) {
     // enter logic here
-  })
+  });
 
-  return Promise.race([addStudent, promiseProgress])
+  return Promise.race([addStudent, promiseProgress]);
 }
 
-export function SubjectDialogAction (context, data) {
-  context.commit('commitSubjectDialog', data)
+export function SubjectDialogAction(context, data) {
+  context.commit("commitSubjectDialog", data);
 }
 
-export function deleteCatalogAction (context, payload) {
+export function deleteCatalogAction(context, payload) {
   var deleteImg = new Promise((resolve, reject) => {
-    var imgRef = fireStorage.ref().child('Library/CatalogImages/' + payload)
+    var imgRef = fireStorage.ref().child("Library/CatalogImages/" + payload);
     imgRef
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // Uh-oh, an error occurred!
-        resolve(payload)
-        console.log(error)
-      })
-  })
+        resolve(payload);
+        console.log(error);
+      });
+  });
   var deleteList = new Promise((resolve, reject) => {
     fireDB
-      .collection('Library/fIrWnYeJhM1fgkoj14gr/Catalogs')
+      .collection("Library/fIrWnYeJhM1fgkoj14gr/Catalogs")
       .doc(payload)
       .delete()
-      .then(function () {
-        resolve(payload)
+      .then(function() {
+        resolve(payload);
       })
-      .catch(function (error) {
-        reject(error)
-      })
-  })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
 
-  return Promise.all([deleteImg, deleteList])
+  return Promise.all([deleteImg, deleteList]);
 }
 
-export function deleteSyAction ({ commit, state }, payload) {
+export function deleteSyAction({ commit, state }, payload) {
   var deleteList = new Promise((resolve, reject) => {
-    let dataSyfilt = filter(state.allSubjects, ['schoolYear', payload.schoolYear])
-    forEach(dataSyfilt, function (value) {
-      console.log(value)
+    let dataSyfilt = filter(state.allSubjects, [
+      "schoolYear",
+      payload.schoolYear
+    ]);
+    forEach(dataSyfilt, function(value) {
+      console.log(value);
       fireDB
-        .collection('VPAA/subjectSchedules/Lists')
+        .collection("VPAA/subjectSchedules/Lists")
         .doc(value.keyIndex)
         .delete()
-        .then(function () {
-          resolve(value)
+        .then(function() {
+          resolve(value);
         })
-        .catch(function (error) {
-          reject(error)
-        })
-    })
-  })
+        .catch(function(error) {
+          reject(error);
+        });
+    });
+  });
 
-  return deleteList
+  return deleteList;
 }
