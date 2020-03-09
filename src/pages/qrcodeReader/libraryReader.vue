@@ -170,7 +170,7 @@
             >{{ studentInformationForm.course }}</q-btn>
           </div>
 
-          <div v-else class="col-md-auto col-sm-12">
+          <div v-else class="col-md-auto col-sm-12 text-grey-10">
             <div class="text-h4 text-bold text-white">
               Welcome to CKCM Library
               <img
@@ -759,7 +759,7 @@ export default {
         color: take0.color,
         textColor: "white",
         multiline: true,
-        timeout: 1500,
+        timeout: 5000,
         html: true,
         message: take0.message,
         avatar: "https://cdn.quasar.dev/img/boy-avatar.png"
@@ -818,7 +818,7 @@ export default {
           course: "",
           profileImgUrl: ""
         };
-      }, 5000);
+      }, 10000);
 
       vm.showNotif(options);
     },
@@ -975,10 +975,11 @@ export default {
 }
 
 .valentinesPic {
-  background-image: url('/statics/jieIcons/apple-touch-icon-72x72.png');
-  // background-image: url('/statics/LIBRARYBG/a757df_5744a6fd6f574e258119e286b9729f9c_mv2.webp');
+  background-size: cover;
+  // background-image: url('/statics/jieIcons/apple-touch-icon-180x180.png');
+  // background-repeat: no-repeat;
+  background-image: url('/statics/LIBRARYBG/a757df_5744a6fd6f574e258119e286b9729f9c_mv2.webp');
   // background-image: url('/statics/LIBRARYBG/a757df_7e6714194fe74dfbadf6914f84bc5e37_mv2.webp');
-  // valentines
   // background-image: url('/statics/defaultimages/valentines3.png');
 }
 
