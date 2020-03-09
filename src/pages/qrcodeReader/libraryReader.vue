@@ -261,39 +261,68 @@
       <div class="q-pa-md col-6">
         <div class="col">
           <q-card class="shadow-8">
-            <q-badge color="red">No Announcement yet!</q-badge>
+            <q-badge color="red">Announcement !</q-badge>
             <q-card-section style="margin-top:-10px">
+              <q-badge color="indigo" align="top">
+                <span class="text-caption">March 1, 2020 to March 31, 2020</span>
+              </q-badge>
               <q-toolbar class="bg-white shadow-5 rounded-borders">
-                <q-toolbar-title class="text-weight-bolder text-dark-orange">
+                <q-toolbar-title class="text-subtitle1 text-weight-bolder text-dark-orange">
                   <q-avatar>
-                    <img src="/statics/jieIcons/apple-touch-icon-180x180.png" alt />
+                    <img
+                      src="https://toppng.com/uploads/preview/28-collection-of-wonder-woman-clipart-images-wonder-women-cartoon-face-11563280260zadsvtcnz4.png"
+                      alt
+                    />
                   </q-avatar>
-                  <span class="q-ml-md">GOOD DAY CKCMIANS! 🤗🤗🤗🤗🤗🤗</span>
+                  <!-- <q-avatar>
+                    <img src="/statics/jieIcons/apple-touch-icon-180x180.png" alt />
+                  </q-avatar>-->
+                  <span class="q-ml-xs">
+                    Women's Month: With the theme
+                    <span
+                      class="text-indigo"
+                    >“WE Make Change Work for Women”</span>🤗🤗🤗🤗🤗🤗
+                  </span>
                   <!-- <q-chip size="md" class="q-py-md" square color="black">
                     <span class="text-white">Month of </span> <q-chip square class="q-px-sm q-pa-none bg-amber-8 text-black">LOVE !</q-chip>
                   </q-chip>-->
                 </q-toolbar-title>
-                <span class="text-h4"></span>
               </q-toolbar>
+
               <q-input
                 autofocus
                 input-class=" text-transparent text-h3 text-bold text-center"
                 v-model="testtester"
                 @keyup="idnumbertypetest"
                 mask="#### - ####"
-                color="blue"
+                color="blue-1"
                 style="width:40px;margin-top:-40px"
                 class="text-weight-bold dense"
                 ref="dummytester"
               />
               <div class="q-mt-md text-body2 text-weight-medium">
-                <div class="text-justify">
-                  <!-- This coming March 02, 2020, We will celebrate our Foundation
-                  Day. This is a special day when the entire school family has a
-                  chance to reflect not only the beginnings of the College and
-                  its founders, but also on the significant development since
-                  the College’s inception.-->
-                </div>
+                <div
+                  class="text-justify"
+                >The celebration shall highlight the need to empower women as harbingers of change and enable them to participate in and benefit from development efforts.</div>
+              </div>
+            </q-card-section>
+
+            <q-card-section style="margin-top:-10px">
+              <q-toolbar class="bg-white shadow-5 rounded-borders">
+                <q-toolbar-title class="text-subtitle1 text-weight-bolder text-dark-orange">
+                  <q-avatar>
+                    <img
+                      src="data:image/png;base64,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"
+                      alt
+                    />
+                  </q-avatar>
+                  <span class="q-ml-xs">March is Fire Prevention Month 🔥🔥🔥🔥🔥🔥🔥🔥</span>
+                </q-toolbar-title>
+              </q-toolbar>
+              <div class="q-mt-md text-body2 text-weight-medium">
+                <div
+                  class="text-justify"
+                >The fire prevention month campaign, according to the measure, promotes “safety consciousness among our people every day of the year as a positive preventive approach to a problem that can be solved by more caution, vigilance, sobriety, exercise of common sense and respect for the law."</div>
               </div>
             </q-card-section>
           </q-card>
@@ -316,9 +345,9 @@
                   <q-separator></q-separator>
                 </div>
                 <div class="col-12 text-center" style="margin-top:-40px">
-                  <h2 class="text-weight-bolder text-blue-grey-9">chapfallen</h2>
+                  <h2 class="text-weight-bolder text-blue-grey-9">devise</h2>
                   <h5 class="text-body1 text-blue-9" style="margin-top:-50px">
-                    <span class="text-italic">adjective</span> | CHAP-faw-lun
+                    <span class="text-italic">verb</span> | dih-VYZE
                   </h5>
                 </div>
               </div>
@@ -326,28 +355,18 @@
               <div>
                 <q-toolbar-title class="text-h5 text-blue-9 text-bold">Definition</q-toolbar-title>
                 <div class="text-subtitle1 text-blue-grey-10">
-                  1 : having the lower jaw hanging loosely
-                  <br />2 : cast down in spirit : depressed
-                  <!-- 2:
+                  1:
                   <ol style="margin-top:-28px" type="a">
-                    <li>
-                      : having a disreputable or improper origin : ill-conceived
-                    </li>
-                    <li>: contemptible, deformed</li>
-                  </ol>-->
+                    <li>: to form in the mind by new combinations or applications of ideas or principles : invent</li>
+                    <li>: to plan to obtain or bring about : plot</li>
+                  </ol>
+                  <div style="margin-top:-18px">2 : to give (real estate) by will</div>
                 </div>
-                <q-toolbar-title class="q-mt-md q-pa-none text-h5 text-blue-9 text-bold">Example</q-toolbar-title>
-                <br />
+                <q-toolbar-title class="q-pa-none text-h5 text-blue-9 text-bold">Example</q-toolbar-title>
                 <p class="text-subtitle1 text-blue-grey-10">
-                  Thereat he was
-                  <span class="text-blue text-italic">chapfallen</span>
-                  , but wishing nevertheless to hearten his good wife.
-                  <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
-                </p>
-                <p class="text-subtitle1 text-blue-grey-10">
-                  There was a moment of
-                  <span class="text-blue text-italic">chapfallen</span>
-                  silence on the part of Harry Stride.
+                  The author's childhood home was
+                  <span class="text-blue text-italic">devised</span>
+                  to the city, and the Historical Commission will turn it into a museum devoted to her life and her works of fantasy and science fiction.
                   <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
                 </p>
               </div>
@@ -359,8 +378,9 @@
       <div v-if="bibleWeek" class="q-pr-md q-pt-md q-pb-md col-6">
         <div class="q-video" :ratio="16/9">
           <video class="fit" controls loop autoplay>
+            <!-- src="statics/LIBRARYBG/Video/The Importance of a Library Why Books are Mightier Than Technology.mp4" -->
             <source
-              src="statics/LIBRARYBG/Video/The Importance of a Library Why Books are Mightier Than Technology.mp4"
+              src="statics/LIBRARYBG/Video/HAPPY INTERNATIONAL WOMEN'S DAY.mp4"
               type="video/mp4"
             />
           </video>
