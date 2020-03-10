@@ -67,6 +67,10 @@ const routes = [
       {
         path: "/libraryBorrowers",
         component: () => import("pages/admin/library/borrowers.vue")
+      },
+      {
+        path: "/libraryPenalties",
+        component: () => import("pages/admin/library/penalties.vue")
       }
     ]
   },

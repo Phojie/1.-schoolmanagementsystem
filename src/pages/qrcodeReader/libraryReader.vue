@@ -345,9 +345,9 @@
                   <q-separator></q-separator>
                 </div>
                 <div class="col-12 text-center" style="margin-top:-40px">
-                  <h2 class="text-weight-bolder text-blue-grey-9">devise</h2>
+                  <h2 class="text-weight-bolder text-blue-grey-9">escapade</h2>
                   <h5 class="text-body1 text-blue-9" style="margin-top:-50px">
-                    <span class="text-italic">verb</span> | dih-VYZE
+                    <span class="text-italic">noun</span> | ESS-kuh-payd
                   </h5>
                 </div>
               </div>
@@ -355,18 +355,20 @@
               <div>
                 <q-toolbar-title class="text-h5 text-blue-9 text-bold">Definition</q-toolbar-title>
                 <div class="text-subtitle1 text-blue-grey-10">
-                  1:
+                  <!-- 1:
                   <ol style="margin-top:-28px" type="a">
                     <li>: to form in the mind by new combinations or applications of ideas or principles : invent</li>
                     <li>: to plan to obtain or bring about : plot</li>
-                  </ol>
-                  <div style="margin-top:-18px">2 : to give (real estate) by will</div>
+                  </ol>-->
+                  : a usually adventurous action that runs counter to approved or conventional conduct
                 </div>
                 <q-toolbar-title class="q-pa-none text-h5 text-blue-9 text-bold">Example</q-toolbar-title>
                 <p class="text-subtitle1 text-blue-grey-10">
-                  The author's childhood home was
-                  <span class="text-blue text-italic">devised</span>
-                  to the city, and the Historical Commission will turn it into a museum devoted to her life and her works of fantasy and science fiction.
+                  There was a report that people with spotlights were turning picnic tables on their end and using them for snow
+                  <span
+                    class="text-blue text-italic"
+                  >escapades</span>
+                  on Pine Street and West Second Street in Cle Elum.
                   <!-- "Sir Keir Starmer, who has also announced his candidacy, said his aim was also to restore 'trust' in Labour. The manifesto, he conceded, was 'overloaded,' yet he did not <span class="text-italic text-primary">resile</span> from its ambitions." — <span class="text-primary text-italic text-bold"> The Telegraph (London), 6 Jan. 2020</span> -->
                 </p>
               </div>
@@ -374,17 +376,19 @@
           </q-card>
         </div>
       </div>
-
+      <!-- src="statics/LIBRARYBG/Video/The Importance of a Library Why Books are Mightier Than Technology.mp4" -->
       <div v-if="bibleWeek" class="q-pr-md q-pt-md q-pb-md col-6">
-        <div class="q-video" :ratio="16/9">
+        <!-- <div class="q-video" :ratio="16/9">
           <video class="fit" controls loop autoplay>
-            <!-- src="statics/LIBRARYBG/Video/The Importance of a Library Why Books are Mightier Than Technology.mp4" -->
             <source
               src="statics/LIBRARYBG/Video/HAPPY INTERNATIONAL WOMEN'S DAY.mp4"
               type="video/mp4"
             />
           </video>
-        </div>
+        </div>-->
+        <q-card>
+          <tablePenalties />
+        </q-card>
 
         <q-card flat bordered class="q-mt-md bg-indigo-1">
           <q-toolbar>
@@ -561,6 +565,8 @@ import axios from "axios";
 
 export default {
   components: {
+    tablePenalties: require("components/libraryCompo/tablePenalties.vue")
+      .default,
     qrcodereader: require("components/qrcodeReader/qrcodereader1.vue").default
     // 'bibleCarousel': require('components/carousel/bibleCarousel.vue').default
     // 'libraryQrLoginCarousel': require('components/carousel/libraryQrcodelogin.vue').default
