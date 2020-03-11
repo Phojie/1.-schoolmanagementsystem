@@ -55,12 +55,6 @@ export default {
           department: "Elementary Education"
         },
         {
-          name: "Charie Ann L. Jubay",
-          idnumber: "2018-0068",
-          penalty: "₱ 100.00",
-          department: "Elementary Education"
-        },
-        {
           name: "Jiselle D. Enterina",
           idnumber: "2018-0058",
           penalty: "₱ 120.00",

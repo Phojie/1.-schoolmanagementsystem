@@ -37,7 +37,7 @@
             class="col-md-auto col-sm-12"
           >
             <div class="text-h4 text-bold text-orange-8">Welcome TIM, FROM YOUR ADMIRER 😍😘</div>
-            <div class="text-h2 text-weight-bolder text-capitalize text-blue-grey-10">
+            <div class="text-h2 text-weight-bolder text-capitalize text-white">
               {{
               studentInformationForm.firstname +
               " " +
@@ -73,7 +73,7 @@
               v-else-if="studentInformationForm.course === 'Computer science'"
               spaced
             ></q-separator>
-            <div class="text-h2 text-bold text-blue-grey-10">{{ studentInformationForm.idnumber }}</div>
+            <div class="text-h2 text-bold text-white">{{ studentInformationForm.idnumber }}</div>
             <q-btn
               class="text-h4 text-bold text-white bg-blue-10 q-mt-lg"
               size="20px"
@@ -267,7 +267,7 @@
                 <span class="text-caption">March 1, 2020 to March 31, 2020</span>
               </q-badge>
               <q-toolbar class="bg-white shadow-5 rounded-borders">
-                <q-toolbar-title class="text-subtitle1 text-weight-bolder text-dark-orange">
+                <q-toolbar-title class="text-body2 text-weight-bolder text-dark-orange">
                   <q-avatar>
                     <img
                       src="https://toppng.com/uploads/preview/28-collection-of-wonder-woman-clipart-images-wonder-women-cartoon-face-11563280260zadsvtcnz4.png"
